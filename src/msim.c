@@ -10,7 +10,9 @@
 
 #include "defs.h"
 
-#include <R.h>
+#ifndef CPP_STANDALONE
+    #include <R.h>
+#endif
 
 #include "debug.h"
 #include "data.h"

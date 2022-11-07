@@ -1,10 +1,24 @@
 #include <math.h> /* sin() etc */
 
-#include <R.h>
-#include <Rmath.h>
-#include <Rinternals.h>
-#define POWDI(x,i) R_pow_di(x,i)
+#ifndef CPP_STANDALONE
+    #include <R.h>
+    #include <Rmath.h>
+    #include <Rinternals.h>
+#else
+    double s_pow(double x, double y) /* = x ^ y */
+        {
+            /* squaring is the most common of the specially handled cases so
+             check for it first. */
+            if(y == 2.0)
+                return x * x;
+            if(x == 1. || y == 0.)
+                return(1.);
+            return pow(x, y);
 
+        }
+#endif
+
+#define POWDI(x,i) R_pow_di(x,i)
 #include "gcdist.h"
 
 double gstat_gcdist(double lon1, double lon2, double lat1, double lat2) {

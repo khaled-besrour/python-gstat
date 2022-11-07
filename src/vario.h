@@ -1,6 +1,9 @@
 #ifndef VARIO_H
 #	define VARIO_H /* avoid multiple inclusion */
 
+#include <stdio.h>
+#include "data.h"
+
 typedef enum {
 	NOTSPECIFIED = 0,
 	SEMIVARIOGRAM,

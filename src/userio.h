@@ -23,6 +23,14 @@ enum Gstat_errno {
 	ER_SECURE      = 19 /* secure mode: operation not allowed */
 };
 
+#ifdef CPP_STANDALONE
+    // R function simulation to avoid a huge amount of modification
+    void R_CheckUserInterrupt();
+    void Rprintf(const char *format, ...);
+    void warning(const char *format, ...);
+    void error(const char *format, ...);
+#endif
+
 #define MAX_ERRNO 19
 void message(char *fmt, ...);  /* message() calls always preceed ErrMsg() */
 #define ErrMsg(a,b) gstat_error(__FILE__,__LINE__,a,b)

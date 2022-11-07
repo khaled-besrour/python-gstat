@@ -6,7 +6,11 @@
 #include <string.h> /* strstr() */
 #include <math.h> /* fabs(), sqrt() */
 
-#include <R.h> /* Rprintf() */
+#ifndef CPP_STANDALONE
+    #include <R.h> /* Rprintf() */
+#else
+    // "userio.h" will redefine printf as Rprintf
+#endif
 
 #include "mtrx.h"
 #include "defs.h"

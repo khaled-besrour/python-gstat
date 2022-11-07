@@ -6,8 +6,13 @@
 #include <math.h>
 
 #include "defs.h"
-/* #define MATHLIB_STANDALONE */
-#include <Rmath.h>
+
+#ifndef CPP_STANDALONE
+    #include <Rmath.h>
+#else
+    #include "r_function/bessel_k.h"
+    #define gammafn tgamma
+#endif
 
 #include "userio.h"
 #include "utils.h"

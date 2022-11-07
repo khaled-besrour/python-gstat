@@ -9,7 +9,11 @@
 #include <math.h>
 #include <string.h>
 
-#include "R.h" /* Rprintf() */
+#ifndef CPP_STANDALONE
+    #include "R.h" /* Rprintf() */
+#else
+    // "userio.h" will redefine printf as Rprintf
+#endif
 
 #include "defs.h"
 #include "mtrx.h"
@@ -58,7 +62,7 @@ const V_MODEL v_models[] = { /* the variogram model catalogue: */
 	{	NOT_SP,          NULL, NULL, NULL, NULL } /* THIS SHOULD BE LAST */
 };
 
-const char *vgm_type_str[] = { 
+const char *vgm_type_str[] = {
 	"not specified",
 	"semivariogram",
 	"cross variogram",
@@ -169,7 +173,7 @@ void free_variogram(VARIOGRAM *v) {
 	for (i = 0; i < v->max_n_models; i++)
 		if (v->part[i].tm_range != NULL)
 			efree(v->part[i].tm_range);
-		
+
 	efree(v->part);
 	if (v->table) {
 		efree(v->table->values);
@@ -184,12 +188,12 @@ void logprint_variogram(const VARIOGRAM *v, int verbose) {
 		return; /* never set */
 
 	if (v->id1 == v->id2)
-		Rprintf("variogram(%s):\n", name_identifier(v->id1)); 
+		Rprintf("variogram(%s):\n", name_identifier(v->id1));
 	else
-		Rprintf("variogram(%s,%s):\n", name_identifier(v->id1), name_identifier(v->id2)); 
+		Rprintf("variogram(%s,%s):\n", name_identifier(v->id1), name_identifier(v->id2));
 
 	for (int i = 0; i < v->n_models; i++) {
-		Rprintf("# model: %d type: %s sill: %g range: %g\n", 
+		Rprintf("# model: %d type: %s sill: %g range: %g\n",
 			i, v_models[v->part[i].model].name_long, v->part[i].sill, v->part[i].range[0]);
 		if (v->part[i].tm_range != NULL) {
 			Rprintf("# range anisotropy, rotation matrix:\n");
@@ -234,13 +238,13 @@ void update_variogram(VARIOGRAM *vp) {
 				p->model == HOLE || p->model == WAVE || /* more??? */
 				p->model == MATERN ||
 				p->model == STEIN ||
-				(p->model == LINEAR && p->range[0] == 0)) 
+				(p->model == LINEAR && p->range[0] == 0))
 					/* sill is reached asymptotically or oscillates */
 			vp->max_range = DBL_MAX;
 		else  /* transitive model: */
 			vp->max_range = MAX(p->range[0], vp->max_range);
 
-		if ((p->model == LINEAR && p->range[0] == 0.0) || p->model == NUGGET 
+		if ((p->model == LINEAR && p->range[0] == 0.0) || p->model == NUGGET
 				|| p->model == INTERCEPT)
 			p->fit_range = 0; /* 1 would lead to singularity */
 		if (p->model == LOGARITHMIC || p->model == POWER || p->model == INTERCEPT
@@ -290,7 +294,7 @@ double get_semivariance(const VARIOGRAM *vp, double dx, double dy, double dz) {
 	double sv = 0.0, dist = 0.0;
 
 	if (vp->table != NULL)
-		return(SEM_TABLE_VALUE(vp->table, 
+		return(SEM_TABLE_VALUE(vp->table,
 				transform_norm(vp->table->tm_range, dx, dy, dz)));
 	if (! vp->isotropic) {
 		for (i = 0; i < vp->n_models; i++)
