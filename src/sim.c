@@ -13,8 +13,14 @@
 #include "gls.h"
 #include "utils.h"
 #include "lm.h"
-#include "s.h" /* r_uniform(), r_normal() */
 #include "sim.h"
+
+#ifndef CPP_STANDALONE
+    #include "s.hpp" /* r_uniform(), r_normal() */
+#else
+    #include "gstat.hpp" /* r_uniform(), r_normal() */
+#endif
+
 
 static void simulate_mvn(const double *est, VEC *result, const int *is_datum);
 static void simulate_uniform(double *est, VEC *result, int orc);

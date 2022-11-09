@@ -9,7 +9,7 @@
 
 #include "debug.h"
 #include "utils.h"
-#include "s.h"
+#include "s.hpp"
 #include "userio.h"
 
 static const char *error_messages[MAX_ERRNO+1] = {
