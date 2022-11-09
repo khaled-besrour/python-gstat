@@ -8,7 +8,7 @@
 #ifndef cpp_exception_hpp
 #define cpp_exception_hpp
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C"
 #endif
 void run_time_error(const char * message);
