@@ -5,10 +5,12 @@
     #include <limits.h>
     #define NA_REAL ' '
     #define NA_INT std::numeric_limits<int>::min()
+    #include "cpp_utils/random_generator.hpp"
 #endif
 
 #include "gstat.hpp"
 #include "s.hpp"
+#include "random.hpp"
 #include <vector>
 
 #ifdef CPP_STANDALONE

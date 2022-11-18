@@ -5,7 +5,7 @@
     #include <Rmath.h>
     #include <Rinternals.h>
 #else
-    double s_pow(double x, double y) /* = x ^ y */
+    double R_pow_di(double x, double y) /* = x ^ y */
         {
             /* squaring is the most common of the specially handled cases so
              check for it first. */

@@ -2,9 +2,12 @@
  * sem.c: calculate sample (cross, co-) variogram from data
  * K.M. refers to changes by Konstantin Malakhanov, see also mapio.c
  */
+#include <math.h>
 
-#include <R.h>
-#include <Rinternals.h>
+#ifndef CPP_STANDALONE
+  #include <R.h>
+  #include <Rinternals.h>
+#endif
 
 #include "defs.h"
 #include "mapio.h"
