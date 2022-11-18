@@ -8,10 +8,6 @@
 #ifndef gstat_hpp
 #define gstat_hpp
 
-#ifdef CPP_STANDALONE
-#include "cpp_utils/random_generator.hpp"
-#endif
-
 #include <stdio.h>
 #include <string>
 
@@ -62,7 +58,7 @@ std::vector<std::vector<double> > get_covariance_list(std::vector<long> & ids , 
 
 void gstat_load_ev(std::vector<unsigned long> & np, std::vector<double> & dist, std::vector<double> & gamma);
 
-std::vector<std::vector<double> > gstat_variogram_values(std::vector<long> & ids, std::vector<double> & pars, int covariance, std::vector<int> & dist_values);
+std::vector<std::vector<double> > gstat_variogram_values(std::vector<long> & ids, std::vector<double> & pars, int covariance, std::vector<double> & dist_values);
 
 
 void gstat_predict(std::vector<double> & retvector, std::vector<int> & retvector_dim, long sn,  std::vector<double> & slocs,

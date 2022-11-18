@@ -7,7 +7,6 @@
     #define NA_INT std::numeric_limits<int>::min()
 #endif
 
-
 #include "gstat.hpp"
 #include "s.hpp"
 #include <vector>
@@ -682,7 +681,7 @@ void gstat_load_variogram(std::vector<long> & s_ids, std::vector<std::string> & 
 }
 
 
-std::vector<std::vector<double> > gstat_variogram_values(std::vector<long> & ids, std::vector<double> & pars, int covariance, std::vector<int> & dist_values) {
+std::vector<std::vector<double> > gstat_variogram_values(std::vector<long> & ids, std::vector<double> & pars, int covariance, std::vector<double> & dist_values) {
     double from, to, n, d, x = 1.0, y = 0.0, z = 0.0;
     int i, id1, id2, cov = 0, ndist = 0;
     VARIOGRAM *vgm;
@@ -894,16 +893,6 @@ static void gstat_set_block(long i, std::vector<double> & block, std::vector<int
     }
     return;
 }
-
-#ifdef CPP_STANDALONE
-    extern "C" double r_uniform(void) {
-        return(random_generator.unif_rand());
-    }
-
-    extern "C" double r_normal(void) {
-        return(random_generator.norm_rand());
-    }
-#endif
 
 int gstat_debug_level(int level) {
     debug_level = level;
