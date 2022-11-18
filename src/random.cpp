@@ -1,12 +1,12 @@
-#ifdef CPP_STANDALONE
+#ifndef CPP_STANDALONE
     #include <R.h>
     #include <Rinternals.h>
 
-    double r_uniform(void) {
+    extern "C" double r_uniform(void) {
         return(unif_rand());
     }
 
-    double r_normal(void) {
+    extern "C" double r_normal(void) {
         return(norm_rand());
     }
 #else
