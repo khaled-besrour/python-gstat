@@ -14,12 +14,7 @@
 #include "utils.h"
 #include "lm.h"
 #include "sim.h"
-
-#ifndef CPP_STANDALONE
-    #include "s.hpp" /* r_uniform(), r_normal() */
-#else
-    #include "gstat.hpp" /* r_uniform(), r_normal() */
-#endif
+#include "random.hpp" /* r_uniform(), r_normal() */
 
 
 static void simulate_mvn(const double *est, VEC *result, const int *is_datum);

@@ -2,15 +2,60 @@
  * userio.c: i/o routines for error, warning, log and progress messages
  */
 #include <time.h>
-
-#include "R.h"
-
 #include "defs.h"
 
 #include "debug.h"
 #include "utils.h"
 #include "s.hpp"
 #include "userio.h"
+
+#ifndef CPP_STANDALONE
+    #include "R.h"
+#else
+    #include <stdarg.h>
+    #include <stdio.h>
+    #include <string.h>
+    #include <math.h>
+    #include "cpp_utils/cpp_exception.hpp"
+    //-------------------------- simulate R function
+    void R_CheckUserInterrupt(){
+        // Python don't need this and don't want to remove in all file
+    }
+
+    void Rprintf(const char *format, ...)
+    {
+        char dest[1024 * 16];
+        va_list argptr;
+        va_start(argptr, format);
+        vsprintf(dest, format, argptr);
+        va_end(argptr);
+        printf(dest);
+    }
+
+
+    void warning(const char *format, ...)
+    {
+        char str[1000];
+        strcpy(str, "WARNING : ");
+        strcat(str, format);
+
+        va_list args;
+        va_start(args, format);
+        printf(str, args);
+        va_end(args);
+    }
+
+    void error(const char *format, ...){
+        char str2[1000];
+
+        va_list args;
+        va_start(args, format);
+        sprintf(str2, format, args);
+        va_end(args);
+
+        run_time_error(str2);
+    }
+#endif
 
 static const char *error_messages[MAX_ERRNO+1] = {
 /* 0 */		"%s",
